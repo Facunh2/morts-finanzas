@@ -96,7 +96,7 @@ function pintar() {
 function pantallaLogin(error = '') {
   vista.innerHTML = `
     <section class="vidrio bienvenida">
-      <img src="img/icono-v2-512.png" class="logo-grande" alt="">
+      <img src="img/icono-v3-512.png" class="logo-grande" alt="">
       <h1>Mort’s Finanzas</h1>
       <p class="suave">Entrá con tu mail. Lo de la casa lo ven los dos; lo tuyo, solo vos.</p>
       <form id="form-login" class="form">
@@ -123,7 +123,7 @@ function pantallaLogin(error = '') {
 function pantallaQuienSos() {
   vista.innerHTML = `
     <section class="vidrio bienvenida">
-      <img src="img/icono-v2-512.png" class="logo-grande" alt="">
+      <img src="img/icono-v3-512.png" class="logo-grande" alt="">
       <h1>¿Quién sos?</h1>
       <p class="suave">${E.store.modo === 'demo' ? 'Modo demo: los datos quedan solo en este navegador.' : 'Se elige una sola vez.'}</p>
       <div class="dos">
