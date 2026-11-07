@@ -35,6 +35,46 @@
 
   <main id="vista" class="vista"></main>
 
+  <!-- Detalle de época: el chanchito alcancía recibe monedas, entre peces y burbujas -->
+  <footer class="acuario" aria-hidden="true">
+    <div class="pecera">
+      <span class="pburbuja pb1"></span><span class="pburbuja pb2"></span><span class="pburbuja pb3"></span>
+      <span class="pburbuja pb4"></span><span class="pburbuja pb5"></span><span class="pburbuja pb6"></span>
+
+      <svg class="pez p1" viewBox="0 0 64 36"><g class="cola"><path d="M20 18 L2 5 Q9 18 2 31 Z" fill="#ff7a1a"/></g><ellipse cx="38" cy="18" rx="22" ry="13" fill="url(#g-naranja)"/><path d="M34 6 Q42 -1 50 8 Z" fill="#ff7a1a"/><ellipse cx="38" cy="11" rx="14" ry="4" fill="#fff" opacity=".5"/><circle cx="50" cy="15" r="3.4" fill="#fff"/><circle cx="51" cy="15" r="1.7" fill="#16325c"/></svg>
+      <svg class="pez p2 izq" viewBox="0 0 64 36"><g class="cola"><path d="M20 18 L2 5 Q9 18 2 31 Z" fill="#1fa7ff"/></g><ellipse cx="38" cy="18" rx="22" ry="13" fill="url(#g-celeste)"/><path d="M34 30 Q42 37 50 28 Z" fill="#1fa7ff"/><ellipse cx="38" cy="11" rx="14" ry="4" fill="#fff" opacity=".5"/><circle cx="50" cy="15" r="3.4" fill="#fff"/><circle cx="51" cy="15" r="1.7" fill="#16325c"/></svg>
+      <svg class="pez p3" viewBox="0 0 64 36"><g class="cola"><path d="M20 18 L2 5 Q9 18 2 31 Z" fill="#f2c200"/></g><ellipse cx="38" cy="18" rx="22" ry="13" fill="url(#g-amarillo)"/><path d="M34 6 Q42 -1 50 8 Z" fill="#f2c200"/><ellipse cx="38" cy="11" rx="14" ry="4" fill="#fff" opacity=".5"/><circle cx="50" cy="15" r="3.4" fill="#fff"/><circle cx="51" cy="15" r="1.7" fill="#16325c"/></svg>
+
+      <span class="moneda m1">$</span><span class="moneda m2">$</span>
+
+      <svg class="chancho" viewBox="0 0 130 96">
+        <path d="M16 46 q-13 -3 -9 -14 q5 -8 10 -1" fill="none" stroke="#ff6fb2" stroke-width="3.5" stroke-linecap="round"/>
+        <rect x="30" y="68" width="15" height="20" rx="7" fill="#ff78b6"/><rect x="82" y="68" width="15" height="20" rx="7" fill="#ff78b6"/>
+        <path d="M38 26 L45 6 L63 21 Z" fill="#ff86bf" stroke="#fff" stroke-opacity=".8"/><path d="M78 23 L92 7 L99 29 Z" fill="#ff86bf" stroke="#fff" stroke-opacity=".8"/>
+        <ellipse cx="62" cy="50" rx="48" ry="34" fill="url(#g-chancho)" stroke="#fff" stroke-width="2"/>
+        <ellipse cx="52" cy="76" rx="9" ry="3.2" fill="#f5b800"/><ellipse cx="64" cy="79" rx="9" ry="3.2" fill="#ffd23a"/><ellipse cx="76" cy="75" rx="9" ry="3.2" fill="#f5b800"/>
+        <ellipse cx="108" cy="54" rx="14" ry="11" fill="#ffa8d3" stroke="#fff" stroke-width="1.6"/>
+        <ellipse cx="104" cy="54" rx="2.4" ry="3.6" fill="#c93e8c"/><ellipse cx="112" cy="54" rx="2.4" ry="3.6" fill="#c93e8c"/>
+        <circle cx="92" cy="40" r="4.4" fill="#2a2a55"/><circle cx="93.4" cy="38.6" r="1.4" fill="#fff"/>
+        <rect x="49" y="16" width="28" height="5.5" rx="2.7" fill="#9c2a68" opacity=".75"/>
+        <path d="M62 68 C46 57 49 44 58 47 C61 48 62 51 62 51 C62 51 63 48 66 47 C75 44 78 57 62 68 Z" fill="#fff" opacity=".8"/>
+        <ellipse cx="46" cy="30" rx="22" ry="8" fill="#fff" opacity=".5" transform="rotate(-14 46 30)"/>
+      </svg>
+
+      <div class="arena"></div>
+      <div class="superficie"></div>
+    </div>
+    <p class="acuario-pie">Mort’s Finanzas · ahorrando de a poquito</p>
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <radialGradient id="g-chancho" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffe3f2"/><stop offset=".55" stop-color="#ff9ccb"/><stop offset="1" stop-color="#f0609f"/></radialGradient>
+        <radialGradient id="g-naranja" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#ffd9a8"/><stop offset=".6" stop-color="#ff9a3c"/><stop offset="1" stop-color="#ee6a0a"/></radialGradient>
+        <radialGradient id="g-celeste" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#c9ecff"/><stop offset=".6" stop-color="#47b8ff"/><stop offset="1" stop-color="#0e86e0"/></radialGradient>
+        <radialGradient id="g-amarillo" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#fff6b0"/><stop offset=".6" stop-color="#ffd92e"/><stop offset="1" stop-color="#e5a800"/></radialGradient>
+      </defs>
+    </svg>
+  </footer>
+
   <!-- Chat: las respuestas aparecen acá -->
   <div id="chat" class="chat-fondo" hidden>
     <div class="chat vidrio">

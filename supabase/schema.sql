@@ -107,3 +107,5 @@ create trigger forzar_dueno before insert on public.metas for each row execute f
 do $$ begin
   alter publication supabase_realtime add table public.movimientos, public.vencimientos, public.metas;
 exception when duplicate_object then null; end $$;
+
+-- Después de este archivo, correr seguridad.sql (cierra el registro y oculta la lista de miembros).
