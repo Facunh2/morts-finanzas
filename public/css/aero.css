@@ -514,51 +514,22 @@ body[data-quien="marti"] .msj.yo { background: linear-gradient(180deg, #ffa8d2, 
 .mas summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--facu-2); padding: 6px 2px; }
 .hoja-fondo { z-index: 55; }
 
-/* ── Acuario de abajo del todo ───────────────────────────────────────────── */
+/* ── Pase de imágenes de abajo del todo ─────────────────────────────────── */
 body.adentro { display: flex; flex-direction: column; }
 body.adentro .vista { flex: 1 0 auto; width: 100%; }
 .acuario { display: none; width: 100%; max-width: 560px; margin: 0 auto; padding: 4px 14px calc(92px + var(--abajo)); }
 body.adentro .acuario { display: block; }
-.pecera {
-  position: relative; height: 156px; overflow: hidden; border-radius: 26px; pointer-events: none;
-  background: linear-gradient(180deg, rgba(190,236,255,.92) 0%, rgba(96,196,250,.9) 45%, rgba(24,140,226,.92) 100%);
-  border: 1.5px solid #fff;
-  box-shadow: 0 10px 28px rgba(0,60,140,.35), inset 0 2px 0 #fff, inset 0 -14px 26px rgba(0,90,190,.35);
+.galeria {
+  position: relative; width: min(250px, 72%); aspect-ratio: 1; margin: 0 auto; border-radius: 30px; overflow: hidden; pointer-events: none;
+  border: 3px solid rgba(255,255,255,.92); background: #7fd0ff;
+  box-shadow: 0 10px 28px rgba(0,60,140,.4), inset 0 0 0 1px rgba(255,255,255,.6);
 }
-.pecera::after { /* brillo de vidrio */
-  content: ''; position: absolute; left: 6%; right: 6%; top: 5px; height: 38px; border-radius: 40px 40px 60% 60%;
-  background: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,0)); z-index: 6;
-}
-.superficie { position: absolute; left: 0; right: 0; top: 0; height: 10px; background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,0)); z-index: 5; }
-.arena {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 18px; z-index: 1;
-  background: linear-gradient(180deg, #ffe9b8, #f1c878); border-top: 1px solid rgba(255,255,255,.8); border-radius: 50% 50% 0 0 / 10px 10px 0 0;
-  box-shadow: inset 0 3px 6px rgba(255,255,255,.7);
-}
-.lobo {
-  position: absolute; left: 50%; bottom: 20px; width: 112px; height: 112px; margin-left: -56px; z-index: 3;
-  border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,.9);
-  box-shadow: 0 8px 18px rgba(0,60,140,.45), inset 0 0 14px rgba(255,255,255,.6);
-  animation: flota-lobo 4.5s ease-in-out infinite;
-}
-.lobo img { width: 100%; height: 100%; display: block; object-fit: cover; }
-.lobo::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,.5), rgba(255,255,255,0) 40%); }
-@keyframes flota-lobo { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-12px) rotate(3deg); } }
-.chispa { position: absolute; z-index: 4; color: #fff; font-size: 16px; text-shadow: 0 0 8px #fff, 0 0 14px rgba(120,220,255,.9); animation: chispea 2.8s ease-in-out infinite; opacity: 0; }
-.c1 { left: 16%; top: 38px; } .c2 { left: 80%; top: 60px; animation-delay: -1s; font-size: 20px; } .c3 { left: 66%; top: 24px; animation-delay: -1.9s; font-size: 12px; }
-@keyframes chispea { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0); } 50% { opacity: 1; transform: scale(1.1) rotate(45deg); } }
-.pburbuja {
-  position: absolute; bottom: 8px; border-radius: 50%; z-index: 4; opacity: 0;
-  background: radial-gradient(circle at 30% 28%, rgba(255,255,255,.95) 0 10%, rgba(255,255,255,.25) 20%, rgba(180,230,255,.15) 58%, rgba(255,255,255,.6) 74%, rgba(255,255,255,0) 76%);
-  box-shadow: inset -2px -3px 7px rgba(120,200,255,.4);
-  animation: burbujea ease-in infinite;
-}
-.pb1 { left: 7%; width: 14px; height: 14px; animation-duration: 6s; }
-.pb2 { left: 19%; width: 8px; height: 8px; animation-duration: 4.5s; animation-delay: -2s; }
-.pb3 { left: 33%; width: 18px; height: 18px; animation-duration: 8s; animation-delay: -5s; }
-.pb4 { left: 68%; width: 10px; height: 10px; animation-duration: 5s; animation-delay: -1s; }
-.pb5 { left: 82%; width: 16px; height: 16px; animation-duration: 7s; animation-delay: -4s; }
-.pb6 { left: 92%; width: 7px; height: 7px; animation-duration: 4s; animation-delay: -3s; }
-@keyframes burbujea { 0% { transform: translate(0, 0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(8px, -150px); opacity: 0; } }
+.galeria::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.4), rgba(255,255,255,0) 38%); }
+.galeria img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: pase 16s ease-in-out infinite; }
+.galeria img:nth-child(1) { animation-delay: 0s; }
+.galeria img:nth-child(2) { animation-delay: 4s; }
+.galeria img:nth-child(3) { animation-delay: 8s; }
+.galeria img:nth-child(4) { animation-delay: 12s; }
+@keyframes pase { 0% { opacity: 0; } 6% { opacity: 1; } 25% { opacity: 1; } 31% { opacity: 0; } 100% { opacity: 0; } }
 .acuario-pie { margin: 10px 0 0; text-align: center; color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .3px; text-shadow: 0 1px 4px rgba(0,50,120,.7); }
-@media (prefers-reduced-motion: reduce) { .lobo, .chispa, .pburbuja { animation: none; } .chispa { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .galeria img { animation: none; } .galeria img:first-child { opacity: 1; } }

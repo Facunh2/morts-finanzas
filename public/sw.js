@@ -1,11 +1,11 @@
 // Service worker: deja la app instalable y abrible sin señal, y recibe los
 // audios / capturas que se comparten a la app desde WhatsApp o la galería (Android).
-const VERSION = 'finanzas-v6';
+const VERSION = 'finanzas-v7';
 const ARCHIVOS = [
   './', './index.html', './css/aero.css', './manifest.webmanifest',
   './js/app.js', './js/store.js', './js/categorias.js', './js/calc.js', './js/lector.js', './js/config.js',
   './img/fondo-depto.jpg', './img/fondo-edificios.jpg', './img/fondo-balcon.jpg',
-  './img/icono-v2-192.png', './img/icono-v2-512.png', './img/icono-v2-180.png', './img/lobo2.jpg',
+  './img/icono-v2-192.png', './img/icono-v2-512.png', './img/icono-v2-180.png', './img/lobo2.jpg', './img/cerdito.jpg', './img/peces.jpg', './img/lemur.jpg',
 ];
 
 self.addEventListener('install', (e) => {
