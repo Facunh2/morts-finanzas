@@ -2,7 +2,7 @@
 <html lang="es-AR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no, interactive-widget=resizes-content">
   <title>Nuestras Finanzas</title>
   <meta name="theme-color" content="#1a8fe8">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,6 +13,7 @@
   <link rel="apple-touch-icon" href="img/icono-180.png">
   <link rel="icon" href="img/icono-192.png">
   <link rel="stylesheet" href="css/aero.css">
+  <script>document.documentElement.dataset.fondo = localStorage.getItem('fondo') || 'depto';</script>
 </head>
 <body>
   <div class="cielo" aria-hidden="true">
@@ -23,18 +24,32 @@
   <header class="barra">
     <img src="img/icono-192.png" alt="" class="barra-logo">
     <div class="barra-titulo">Nuestras <b>Finanzas</b></div>
-    <div id="quien-chip" class="chip-persona"></div>
+    <button id="quien-chip" class="chip-persona" data-accion="ajustes" aria-label="Ajustes"></button>
   </header>
+
+  <!-- La única navegación: la casa o lo mío -->
+  <div id="lados" class="lados" hidden>
+    <button data-lado="casa" class="lado on">🏠 La casa</button>
+    <button data-lado="mio" id="lado-mio" class="lado">🔒 Lo mío</button>
+  </div>
 
   <main id="vista" class="vista"></main>
 
-  <nav id="nav" class="nav" hidden>
-    <button data-tab="inicio" class="nav-btn"><span>🏡</span>Inicio</button>
-    <button data-tab="casa" class="nav-btn"><span>🧺</span>Casa</button>
-    <button data-accion="nuevo" class="nav-orbe" aria-label="Agregar"><span>+</span></button>
-    <button data-tab="yo" class="nav-btn"><span id="nav-yo-ico">🙂</span><em id="nav-yo">Yo</em></button>
-    <button data-tab="ajustes" class="nav-btn"><span>⚙️</span>Ajustes</button>
-  </nav>
+  <!-- Chat: las respuestas aparecen acá -->
+  <div id="chat" class="chat-fondo" hidden>
+    <div class="chat vidrio">
+      <div class="chat-top"><b>💬 Anotador</b><button class="x" data-accion="cerrar-chat" aria-label="Cerrar">✕</button></div>
+      <div id="chat-lista" class="chat-lista"></div>
+    </div>
+  </div>
+
+  <!-- Barra de abajo, como WhatsApp -->
+  <form id="form-chat" class="redactor" autocomplete="off">
+    <button type="button" class="redactor-btn mas-btn" data-accion="manual" aria-label="Anotar con botones">＋</button>
+    <input id="entrada" placeholder="Escribí un gasto…" enterkeyhint="send">
+    <button type="button" class="redactor-btn" data-accion="captura" aria-label="Mandar captura o audio">📷</button>
+    <button type="button" id="btn-mic" class="redactor-btn mic" aria-label="Grabar audio">🎤</button>
+  </form>
 
   <div id="hoja" class="hoja-fondo" hidden></div>
   <div id="avisos" class="avisos"></div>

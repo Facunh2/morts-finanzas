@@ -35,7 +35,7 @@ En demo los datos quedan en ese navegador y se puede cambiar de Facu a Marti en 
 |---|---|
 | `public/js/categorias.js` | Categorías y reglas (qué es 50/50, qué paga uno solo). Única fuente: la IA lee esta lista. |
 | `public/js/calc.js` | Las cuentas: quién le debe a quién, parte de cada uno, lo que queda en el mes. |
-| `public/js/app.js` | Pantallas y carga. |
+| `public/js/app.js` | Pantallas (La casa / Lo mío), chat anotador y carga con botones. |
 | `public/js/store.js` | Datos: demo (navegador) o Supabase (nube). |
 | `supabase/functions/_shared/lector.js` | Audio → texto (whisper-1) → movimientos (gpt-4.1-mini), vía APIMART. |
 | `supabase/schema.sql` | Tablas y reglas de privacidad. |
