@@ -74,7 +74,7 @@ function pantallaLogin(error = '') {
   vista.innerHTML = `
     <section class="vidrio bienvenida">
       <img src="img/icono-512.png" class="logo-grande" alt="">
-      <h1>Nuestras Finanzas</h1>
+      <h1>Mort’s Finanzas</h1>
       <p class="suave">Entrá con tu mail. Lo de la casa lo ven los dos; lo tuyo, solo vos.</p>
       <form id="form-login" class="form">
         <input name="email" type="email" placeholder="Tu mail" autocomplete="email" required>
