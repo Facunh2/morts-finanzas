@@ -1,4 +1,4 @@
-# Nuestras Finanzas · Facu y Marti
+# Mort’s Finanzas · Facu y Marti
 
 App para el celular (se instala desde el navegador, sin App Store) con las finanzas de la pareja.
 Tiene un sector **Casa** (lo ven los dos, 50/50 o de uno solo), una sección **personal y privada**

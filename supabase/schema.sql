@@ -1,4 +1,4 @@
--- Nuestras Finanzas · base de datos en Supabase
+-- Mort’s Finanzas · base de datos en Supabase
 -- Pegar entero en Supabase → SQL Editor → Run.
 -- Regla central: lo de la CASA lo ven los dos; lo PERSONAL solo su dueño.
 -- La privacidad la impone la base (RLS), no la app: aunque alguien toque el
