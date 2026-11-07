@@ -31,9 +31,32 @@ const leerMonto = (s) => {
 };
 const moverMes = (mes, d) => { const [a, m] = mes.split('-').map(Number); const x = new Date(a, m - 1 + d, 1); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}`; };
 
+/** Borra lo guardado en el celular (no los datos, que están en la nube) y vuelve a bajar todo. */
+async function actualizarApp() {
+  try {
+    const regs = (await navigator.serviceWorker?.getRegistrations()) || [];
+    await Promise.all(regs.map((r) => r.unregister()));
+    const claves = await caches.keys();
+    await Promise.all(claves.filter((k) => k !== 'compartidos').map((k) => caches.delete(k)));
+  } catch { /* si falla, igual recargamos */ }
+  location.reload();
+}
+
 // ── Arranque ─────────────────────────────────────────────────────────────────
 async function iniciar() {
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  if ('serviceWorker' in navigator) {
+    // Si había una versión instalada y llega otra nueva, recargar una vez para mostrarla.
+    const tenia = !!navigator.serviceWorker.controller;
+    let recargado = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (tenia && !recargado) { recargado = true; location.reload(); }
+    });
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((reg) => {
+      reg.update().catch(() => {});
+      // La app instalada queda abierta días: buscar novedades cada vez que vuelven a ella.
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) reg.update().catch(() => {}); });
+    }).catch(() => {});
+  }
   E.store = await crearStore();
   E.store.alCambiar(() => recargar());
   const s = await E.store.sesion();
@@ -318,6 +341,11 @@ function vistaAjustes() {
       <div class="tarjeta-titulo">📲 Tenerla como app</div>
       <p><b>iPhone:</b> Safari → Compartir → <i>Agregar a pantalla de inicio</i>.</p>
       <p><b>Android:</b> Chrome → ⋮ → <i>Instalar app</i>. Después podés compartirle audios de WhatsApp o capturas directo.</p>
+    </section>
+    <section class="vidrio">
+      <div class="tarjeta-titulo">🔄 Actualizar la app</div>
+      <p>Si ves algo viejo, tocá acá: baja la última versión y se reinicia.</p>
+      <button class="boton vidrio-btn chico" data-accion="actualizar">Actualizar ahora</button>
     </section>
     <section class="vidrio">
       <div class="tarjeta-titulo">👤 Cuenta</div>
@@ -637,6 +665,7 @@ document.addEventListener('click', async (e) => {
     case 'borrar-venc': return E.store.borrarVencimiento(id);
     case 'cambiar-persona': await E.store.elegirPersona(otra(E.quien)); E.vista = 'casa'; E.lado = 'casa'; return entrar(otra(E.quien));
     case 'exportar': return exportar();
+    case 'actualizar': return actualizarApp();
     case 'fondo': document.documentElement.dataset.fondo = t.dataset.v; localStorage.setItem('fondo', t.dataset.v); return pintar();
     case 'salir':
       await E.store.salir(); E.quien = null; document.body.classList.remove('adentro'); $('#quien-chip').innerHTML = '';

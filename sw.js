@@ -1,11 +1,11 @@
 // Service worker: deja la app instalable y abrible sin señal, y recibe los
 // audios / capturas que se comparten a la app desde WhatsApp o la galería (Android).
-const VERSION = 'finanzas-v4';
+const VERSION = 'finanzas-v5';
 const ARCHIVOS = [
   './', './index.html', './css/aero.css', './manifest.webmanifest',
   './js/app.js', './js/store.js', './js/categorias.js', './js/calc.js', './js/lector.js', './js/config.js',
   './img/fondo-depto.jpg', './img/fondo-edificios.jpg', './img/fondo-balcon.jpg',
-  './img/icono-192.png', './img/icono-512.png', './img/icono-180.png',
+  './img/icono-192.png', './img/icono-512.png', './img/icono-180.png', './img/lobo.jpg',
 ];
 
 self.addEventListener('install', (e) => {
@@ -43,7 +43,8 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
   // Red primero (para ver siempre lo último); si no hay señal, lo guardado.
   e.respondWith(
-    fetch(e.request)
+    // no-cache: GitHub Pages deja guardado el archivo 10 min; así siempre pregunta si hay uno nuevo.
+    fetch(e.request, { cache: 'no-cache' })
       .then((r) => { const copia = r.clone(); caches.open(VERSION).then((c) => c.put(e.request, copia)); return r; })
       .catch(() => caches.match(e.request).then((r) => r || caches.match('./index.html'))),
   );
