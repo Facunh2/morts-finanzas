@@ -1,0 +1,6 @@
+{
+  "name": "finanzas-pareja",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "node dev-server.js" }
+}
