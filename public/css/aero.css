@@ -535,31 +535,18 @@ body.adentro .acuario { display: block; }
   background: linear-gradient(180deg, #ffe9b8, #f1c878); border-top: 1px solid rgba(255,255,255,.8); border-radius: 50% 50% 0 0 / 10px 10px 0 0;
   box-shadow: inset 0 3px 6px rgba(255,255,255,.7);
 }
-.chancho { position: absolute; left: 50%; bottom: 14px; width: 118px; margin-left: -59px; z-index: 3; transform-origin: 50% 100%; animation: rebote 1.8s ease-in-out infinite; filter: drop-shadow(0 6px 6px rgba(0,60,130,.35)); }
-@keyframes rebote { 0%, 32%, 52%, 100% { transform: scale(1, 1); } 40% { transform: scale(1.07, .93); } 46% { transform: scale(.97, 1.04); } }
-.moneda {
-  position: absolute; top: -24px; left: 50%; margin-left: -11px; width: 22px; height: 22px; border-radius: 50%; z-index: 2;
-  display: grid; place-items: center; font-size: 12px; font-weight: 800; color: #8a5a00;
-  background: radial-gradient(circle at 35% 30%, #fff7b8, #ffd23a 55%, #e0a100);
-  border: 1.5px solid #fff3a0; box-shadow: 0 2px 4px rgba(120,80,0,.4);
-  animation: cae 3.6s ease-in infinite; opacity: 0;
+.lobo {
+  position: absolute; left: 50%; bottom: 20px; width: 112px; height: 112px; margin-left: -56px; z-index: 3;
+  border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,.9);
+  box-shadow: 0 8px 18px rgba(0,60,140,.45), inset 0 0 14px rgba(255,255,255,.6);
+  animation: flota-lobo 4.5s ease-in-out infinite;
 }
-.m2 { animation-delay: -1.8s; }
-@keyframes cae {
-  0% { transform: translateY(0) rotateY(0); opacity: 0; }
-  10% { opacity: 1; }
-  70% { transform: translateY(88px) rotateY(900deg); opacity: 1; }
-  74%, 100% { transform: translateY(96px) rotateY(900deg) scale(.6); opacity: 0; }
-}
-.pez { position: absolute; width: 50px; height: 28px; z-index: 2; animation: nada-der linear infinite; }
-.pez .cola { transform-box: fill-box; transform-origin: right center; animation: cola .45s ease-in-out infinite alternate; }
-@keyframes cola { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
-.p1 { top: 32px; animation-duration: 17s; }
-.p2 { top: 88px; width: 42px; height: 24px; animation-name: nada-izq; animation-duration: 21s; animation-delay: -8s; }
-.p3 { top: 60px; width: 34px; height: 19px; animation-duration: 25s; animation-delay: -14s; }
-.pez.izq { transform: scaleX(-1); }
-@keyframes nada-der { from { left: -70px; transform: translateY(0); } 25% { transform: translateY(8px); } 50% { transform: translateY(-4px); } 75% { transform: translateY(6px); } to { left: 108%; transform: translateY(0); } }
-@keyframes nada-izq { from { left: 108%; transform: scaleX(-1) translateY(0); } 33% { transform: scaleX(-1) translateY(-8px); } 66% { transform: scaleX(-1) translateY(5px); } to { left: -70px; transform: scaleX(-1) translateY(0); } }
+.lobo img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.lobo::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,.5), rgba(255,255,255,0) 40%); }
+@keyframes flota-lobo { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-12px) rotate(3deg); } }
+.chispa { position: absolute; z-index: 4; color: #fff; font-size: 16px; text-shadow: 0 0 8px #fff, 0 0 14px rgba(120,220,255,.9); animation: chispea 2.8s ease-in-out infinite; opacity: 0; }
+.c1 { left: 16%; top: 38px; } .c2 { left: 80%; top: 60px; animation-delay: -1s; font-size: 20px; } .c3 { left: 66%; top: 24px; animation-delay: -1.9s; font-size: 12px; }
+@keyframes chispea { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0); } 50% { opacity: 1; transform: scale(1.1) rotate(45deg); } }
 .pburbuja {
   position: absolute; bottom: 8px; border-radius: 50%; z-index: 4; opacity: 0;
   background: radial-gradient(circle at 30% 28%, rgba(255,255,255,.95) 0 10%, rgba(255,255,255,.25) 20%, rgba(180,230,255,.15) 58%, rgba(255,255,255,.6) 74%, rgba(255,255,255,0) 76%);
@@ -574,4 +561,4 @@ body.adentro .acuario { display: block; }
 .pb6 { left: 92%; width: 7px; height: 7px; animation-duration: 4s; animation-delay: -3s; }
 @keyframes burbujea { 0% { transform: translate(0, 0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(8px, -150px); opacity: 0; } }
 .acuario-pie { margin: 10px 0 0; text-align: center; color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .3px; text-shadow: 0 1px 4px rgba(0,50,120,.7); }
-@media (prefers-reduced-motion: reduce) { .chancho, .moneda, .pez, .pez .cola, .pburbuja { animation: none; } .moneda { display: none; } .pez.p1 { left: 12%; } .pez.p2 { left: 70%; } .pez.p3 { left: 30%; } }
+@media (prefers-reduced-motion: reduce) { .lobo, .chispa, .pburbuja { animation: none; } .chispa { opacity: 1; } }
