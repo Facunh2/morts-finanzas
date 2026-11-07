@@ -1,0 +1,3 @@
+[functions.leer-gasto]
+# La función verifica la sesión y que sea Facu o Marti (ver esMiembro en index.ts).
+verify_jwt = false
