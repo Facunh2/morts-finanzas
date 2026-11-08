@@ -165,14 +165,16 @@ function filaMov(m) {
   return `<li class="fila" data-accion="editar" data-id="${m.id}">
     <span class="ico ${m.ambito === 'casa' ? 'casa' : E.quien}">${c.icono}</span>
     <span class="fila-txt"><b>${esc(m.nota || c.nombre)}</b><small>${fechaCorta(m.fecha)} · ${esc(detalle)}</small></span>
-    <span class="fila-monto ${m.tipo === 'ingreso' ? 'verde-t' : ''}">${signo}${plata(Math.abs(m.monto), m.moneda)}</span></li>`;
+    <span class="fila-monto ${m.tipo === 'ingreso' ? 'verde-t' : ''}">${signo}${plata(Math.abs(m.monto), m.moneda)}</span>
+    <span class="lapiz" aria-hidden="true">✎</span></li>`;
 }
 
 const ordenar = (l) => [...l].sort((x, y) => (y.fecha + (y.creado || '')).localeCompare(x.fecha + (x.creado || '')));
 
 function ultimos(lista, lado) {
   if (!lista.length) return `<div class="vacio"><div class="vacio-burbuja">🫧</div><p>Todavía no hay nada.<br>Escribí abajo, por ejemplo <b>"súper 25 lucas"</b>.</p></div>`;
-  return `<ul class="lista">${ordenar(lista).slice(0, 5).map(filaMov).join('')}</ul>
+  return `<p class="pista-editar">✎ Tocá un gasto para corregir el monto o borrarlo</p>
+    <ul class="lista">${ordenar(lista).slice(0, 5).map(filaMov).join('')}</ul>
     ${lista.length > 5 ? `<button class="ver-todo" data-accion="ver-todo" data-lado="${lado}">Ver los ${lista.length} movimientos ›</button>` : ''}`;
 }
 
@@ -240,6 +242,76 @@ function filaVencimiento(v) {
     ${estado}</li>`;
 }
 
+
+// ── Gráficos de "Lo mío" ─────────────────────────────────────────────────────
+const COLORES = ['#1b8ef2', '#ff4fa3', '#4cc61e', '#ffb020', '#8a5cf6', '#18c5c5'];
+const abreviar = (v) => (v >= 1e6 ? `${(v / 1e6).toFixed(1).replace('.', ',')} M` : v >= 1000 ? `${Math.round(v / 1000)} k` : String(Math.round(v)));
+
+/** Dona de colores + lista con porcentajes: en qué se fue la plata del mes. */
+function dona(filasIn) {
+  const ordenadas = filasIn.filter(([, v]) => v.ARS > 0).sort((a, b) => b[1].ARS - a[1].ARS);
+  if (!ordenadas.length) return '';
+  // Las 5 más grandes por separado y el resto junto, para que se lea de un vistazo.
+  let filas = ordenadas.slice(0, 5);
+  const resto = ordenadas.slice(5).reduce((s, [, v]) => s + v.ARS, 0);
+  if (resto > 0) filas = [...filas, ['_otros', { ARS: resto }]];
+  const total = filas.reduce((s, [, v]) => s + v.ARS, 0);
+  const nombreDe = (id) => id === '_casa' ? { icono: '🏠', nombre: 'Tu parte de la casa' }
+    : id === '_otros' ? { icono: '✨', nombre: 'Otros' } : categoria(id, E.quien);
+  const R = 70, C = 2 * Math.PI * R;
+  let acum = 0;
+  const arcos = filas.map(([, v], i) => {
+    const largo = (v.ARS / total) * C;
+    const color = filas[i][0] === '_otros' ? '#9db4c8' : COLORES[i % COLORES.length];
+    const arco = `<circle cx="100" cy="100" r="${R}" fill="none" stroke="${color}" stroke-width="30"
+      stroke-dasharray="${Math.max(largo - 2, 0.5)} ${C}" stroke-dashoffset="${-acum}" transform="rotate(-90 100 100)"/>`;
+    acum += largo;
+    return arco;
+  }).join('');
+  const txt = plata(total);
+  const tam = txt.length > 11 ? 14 : txt.length > 9 ? 16 : 19;
+  const [idTop, vTop] = filas[0];
+  const cTop = nombreDe(idTop);
+  return `
+    <div class="dona-caja">
+      <svg class="dona" viewBox="0 0 200 200" role="img" aria-label="En qué gastaste">
+        <circle cx="100" cy="100" r="86" fill="rgba(255,255,255,.35)" stroke="rgba(255,255,255,.8)" stroke-width="2"/>
+        ${arcos}
+        <circle cx="100" cy="100" r="54" fill="rgba(255,255,255,.88)" stroke="#fff" stroke-width="2"/>
+        <text x="100" y="92" text-anchor="middle" class="dona-t1">Gastaste</text>
+        <text x="100" y="${108 + (19 - tam) / 2}" text-anchor="middle" class="dona-t2" style="font-size:${tam}px">${txt}</text>
+      </svg>
+    </div>
+    <p class="dona-top">Lo que más pesa: <b>${cTop.icono} ${esc(cTop.nombre)}</b> · ${Math.round((vTop.ARS / total) * 100)}%</p>
+    <ul class="leyenda">${filas.map(([id, v], i) => {
+      const c = nombreDe(id);
+      const color = id === '_otros' ? '#9db4c8' : COLORES[i % COLORES.length];
+      return `<li><i style="background:${color}"></i><span class="ley-nom">${c.icono} ${esc(c.nombre)}</span>
+        <span class="ley-pct">${Math.round((v.ARS / total) * 100)}%</span><span class="ley-monto">${plata(v.ARS)}</span></li>`;
+    }).join('')}</ul>`;
+}
+
+/** Columnas de los últimos 6 meses: cuánto gastaste en cada uno. */
+function mesAMes() {
+  const q = E.quien;
+  const datos = [5, 4, 3, 2, 1, 0].map((k) => {
+    const m = moverMes(E.mes, -k);
+    const r = resumenPersonal(E.movs, m, q);
+    return { m, v: r.gastos.ARS + r.parteCasa.ARS };
+  });
+  if (datos.filter((d) => d.v > 0).length < 2) return '';
+  const tope = Math.max(...datos.map((d) => d.v), 1);
+  return `<section class="vidrio">
+    <div class="tarjeta-titulo">📊 Mes a mes</div>
+    <div class="mesames">${datos.map((d) => `
+      <div class="col ${d.m === E.mes ? 'on' : ''}">
+        <span class="col-v">${d.v ? abreviar(d.v) : ''}</span>
+        <div class="col-tubo"><i style="height:${d.v ? Math.max(6, (d.v / tope) * 100) : 0}%"></i></div>
+        <span class="col-m">${MESES[Number(d.m.slice(5)) - 1].slice(0, 3)}</span>
+      </div>`).join('')}</div>
+  </section>`;
+}
+
 // ── LO MÍO (privado) ─────────────────────────────────────────────────────────
 function vistaMio() {
   const q = E.quien;
@@ -263,9 +335,11 @@ function vistaMio() {
 
     <section class="vidrio">
       <div class="tarjeta-titulo">¿En qué gastaste?</div>
-      ${barrasCategorias(filasGasto, 6) || '<p class="suave">Sin gastos este mes.</p>'}
+      ${dona(filasGasto) || '<p class="suave">Sin gastos este mes.</p>'}
       ${r.transporte.ARS ? `<p class="nota-chica">🚕 Viajes: ${plata(r.transporte.ARS)} (los tuyos + tu mitad de los compartidos)</p>` : ''}
     </section>
+
+    ${mesAMes()}
 
     <section class="vidrio">
       <div class="tarjeta-titulo">Tus ahorros</div>
@@ -529,7 +603,7 @@ function pintarHoja() {
   hoja.innerHTML = `
     <div class="hoja vidrio">
       <div class="hoja-asa"></div>
-      <div class="hoja-top"><b>${F.id ? 'Corregir' : F.modo === 'saldo' ? 'Saldar cuentas' : 'Anotar'}</b><button class="x" data-hoja="cerrar" aria-label="Cerrar">✕</button></div>
+      <div class="hoja-top"><b>${F.id ? 'Corregir o borrar' : F.modo === 'saldo' ? 'Saldar cuentas' : 'Anotar'}</b><button class="x" data-hoja="cerrar" aria-label="Cerrar">✕</button></div>
       ${F.modo === 'saldo' ? '' : `<div class="paso">1. ¿Qué es?</div><div class="segmentos">${seg('casa', '🏠 De la casa')}${seg('personal', '🔒 Mío')}${seg('ingreso', '💵 Me entró')}${seg('ahorro', '🐷 Ahorro')}</div>`}
       <div class="paso">${F.modo === 'saldo' ? '' : '2. '}¿Cuánto?</div>
       <div class="monto-caja">

@@ -1,6 +1,6 @@
 // Service worker: deja la app instalable y abrible sin señal, y recibe los
 // audios / capturas que se comparten a la app desde WhatsApp o la galería (Android).
-const VERSION = 'finanzas-v8';
+const VERSION = 'finanzas-v9';
 const ARCHIVOS = [
   './', './index.html', './css/aero.css', './manifest.webmanifest',
   './js/app.js', './js/store.js', './js/categorias.js', './js/calc.js', './js/lector.js', './js/config.js',
